@@ -1,0 +1,10 @@
+mongo:
+  uri: "mongodb+srv://<user>:<password>@cluster0.example.mongodb.net/marketplace.phones?retryWrites=true&w=majority"
+paths:
+  preprocessed_parquet: "../preprocessed/phones.parquet"
+  metadata: "../preprocess/metadata.json"
+  scaler: "../preprocess/scaler.joblib"
+  model_dir: "../models/price_predictor"
+training:
+  epochs: 20
+  batch_size: 64
