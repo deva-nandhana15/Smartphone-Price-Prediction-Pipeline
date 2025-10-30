@@ -12,6 +12,44 @@ This project implements an **end-to-end big data pipeline** that successfully:
 
 **Project Status**: ✅ COMPLETED | **Pipeline Duration**: ~50 minutes | **Infrastructure**: 6 Docker containers
 
+---
+
+## 📊 Pipeline Workflow
+
+```mermaid
+graph TB
+    Start([Start]) --> Ingest
+
+    Ingest["Data Ingestion<br>eBay API<br>89,548 phones<br>75.2 MB JSON"]
+
+    Ingest --> Process
+
+    Process["Preprocessing<br>Clean & Feature Engineering<br>89K → 30K records<br>Train: 24K | Test: 6K"]
+
+    Process --> Train
+
+    Train["Model Training<br>MapReduce via Spark<br>50 iterations, 23 seconds<br>RMSE: $410 | MAE: $213"]
+
+    Train --> Viz
+
+    Viz["Visualization<br>8 PNG Charts<br>3 Interactive HTML Dashboards"]
+
+    Viz --> End([Complete])
+
+    subgraph Infrastructure["Infrastructure: Hadoop + Spark Cluster (6 Containers)"]
+        HDFS[HDFS Storage]
+        Yarn[Yarn Scheduler]
+        Spark[Spark Workers]
+    end
+
+    Ingest -.-> HDFS
+    Process -.-> Spark
+    Train -.-> Spark
+    Train -.-> Yarn
+```
+
+---
+
 ## Architecture
 
 - **Data Ingestion**: eBay Browse API → HDFS
